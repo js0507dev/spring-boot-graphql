@@ -1,0 +1,33 @@
+type Member {
+    id: Int!
+    name: String!
+    email: String!
+}
+
+extend type Query {
+    members: [Member!]!
+    member(id: Int!): Member!
+}
+
+extend type Mutation {
+    createMember(data: CreateMemberInput!): CreateMemberPayload!
+    patchMember(data: PatchMemberInput!): PatchMemberPayload!
+}
+
+input CreateMemberInput {
+    name: String!
+    email: String!
+}
+
+input PatchMemberInput {
+    name: String
+    email: String
+}
+
+type CreateMemberPayload {
+    record: Member
+}
+
+type PatchMemberPayload {
+    record: Member
+}
