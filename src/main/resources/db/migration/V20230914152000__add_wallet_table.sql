@@ -1,15 +1,7 @@
-CREATE OR REPLACE TABLE currencies(
-    ticker VARCHAR(20) PRIMARY KEY,
-    name VARCHAR(60) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
 CREATE OR REPLACE TABLE wallets(
     id SERIAL PRIMARY KEY,
     member_id INT NOT NULL REFERENCES members,
-    ticker VARCHAR(20) NOT NULL REFERENCES currency,
+    ticker VARCHAR(20) NOT NULL REFERENCES currencies,
     total_balance BIGINT NOT NULL DEFAULT 0,
     available_balance BIGINT NOT NULL DEFAULT 0,
     locked_amount BIGINT NOT NULL DEFAULT 0,
