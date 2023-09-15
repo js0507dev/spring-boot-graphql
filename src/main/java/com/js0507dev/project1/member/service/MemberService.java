@@ -4,6 +4,7 @@ import com.js0507dev.project1.member.dto.CreateMemberDTO;
 import com.js0507dev.project1.member.dto.CreateMemberPayloadDTO;
 import com.js0507dev.project1.member.dto.MemberDTO;
 import com.js0507dev.project1.member.entity.Member;
+import com.js0507dev.project1.member.repository.MemberQueryRepository;
 import com.js0507dev.project1.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     public MemberDTO findById(Long id) {
         Member found = memberRepository.findById(id).orElseThrow();

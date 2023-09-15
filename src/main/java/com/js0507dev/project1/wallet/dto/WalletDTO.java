@@ -17,7 +17,7 @@ public class WalletDTO {
     public static WalletDTO fromEntity(Wallet entity) {
         return WalletDTO.builder()
                 .id(entity.getId())
-                .memberId(entity.getMemberId())
+//                .memberId(entity.getMemberId())
                 .ticker(entity.getTicker())
                 .totalBalance(entity.getTotalBalance())
                 .availableBalance(entity.getAvailableBalance())
