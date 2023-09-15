@@ -1,0 +1,20 @@
+type Wallet {
+    id: Int!
+    member: Member
+    ticker: String!
+    totalBalance: Int!
+    availableBalance: Int!
+    lockedAmount: Int!
+}
+
+extend type Query {
+    wallet(id: Int!): Wallet!
+}
+
+extend type Mutation {
+    createWallet(memberId: Int!): CreateWalletPayload!
+}
+
+type CreateWalletPayload {
+    record: Wallet!
+}

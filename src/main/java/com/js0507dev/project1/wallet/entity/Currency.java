@@ -1,10 +1,8 @@
 package com.js0507dev.project1.wallet.entity;
 
 import com.js0507dev.project1.common.entity.AbstractTimestampEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.js0507dev.project1.wallet.enums.Ticker;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -16,7 +14,8 @@ import lombok.*;
 @Table(name = "currencies")
 public class Currency extends AbstractTimestampEntity {
     @Id
-    private String ticker;
+    @Enumerated(EnumType.STRING)
+    private Ticker ticker;
     @Column
     private String name;
     @Column

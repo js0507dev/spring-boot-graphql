@@ -2,6 +2,7 @@ package com.js0507dev.project1.wallet.entity;
 
 import com.js0507dev.project1.common.entity.AbstractTimestampEntity;
 import com.js0507dev.project1.member.entity.Member;
+import com.js0507dev.project1.wallet.enums.Ticker;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,13 +17,14 @@ public class Wallet extends AbstractTimestampEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @Column(insertable = false, updatable = false)
-//    private Long memberId;
+    @Column(name = "member_id", insertable = false, updatable = false)
+    private Long memberId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private Member member;
+    @Enumerated(EnumType.STRING)
     @Column
-    private String ticker;
+    private Ticker ticker;
     @Column
     private Long totalBalance;
     @Column
