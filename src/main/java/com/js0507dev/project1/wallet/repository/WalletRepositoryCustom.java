@@ -12,6 +12,6 @@ public class WalletRepositoryCustom {
   private final JPAQueryFactory queryFactory;
 
   public Long create(Long memberId, Ticker ticker) {
-    return queryFactory.insert(QWallet.wallet).columns(QWallet.wallet.memberId, QWallet.wallet.ticker).values(memberId, ticker).execute();
+    return queryFactory.insert(QWallet.wallet).columns(QWallet.wallet.memberId, QWallet.wallet.ticker).values(memberId, ticker.toString()).execute();
   }
 }

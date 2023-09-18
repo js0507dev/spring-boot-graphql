@@ -16,22 +16,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
-    private final MemberRepository memberRepository;
-    private final MemberQueryRepository memberQueryRepository;
+  private final MemberRepository memberRepository;
+  private final MemberQueryRepository memberQueryRepository;
 
-    public MemberDTO findById(Long id) {
-        Member found = memberRepository.findById(id).orElseThrow();
-        return MemberDTO.fromEntity(found);
-    }
+  public MemberDTO findById(Long id) {
+    Member found = memberRepository.findById(id).orElseThrow();
+    return MemberDTO.fromEntity(found);
+  }
 
-    public List<MemberDTO> findAll() {
-        return memberRepository.findAll().stream().map(MemberDTO::fromEntity).toList();
-    }
+  public List<MemberDTO> findAll() {
+    return memberRepository.findAll().stream().map(MemberDTO::fromEntity).toList();
+  }
 
-    public CreateMemberPayloadDTO create(CreateMemberDTO dto) {
-        Member created = memberRepository.save(dto.toEntity());
-        MemberDTO found = this.findById(created.getId());
+  public CreateMemberPayloadDTO create(CreateMemberDTO dto) {
+    Member created = memberRepository.save(dto.toEntity());
+    MemberDTO found = this.findById(created.getId());
 
-        return CreateMemberPayloadDTO.fromMemberDTO(found);
-    }
+    return CreateMemberPayloadDTO.fromMemberDTO(found);
+  }
 }
