@@ -8,11 +8,11 @@ type Wallet {
 }
 
 extend type Query {
-    wallet(id: Int!): Wallet!
+    wallet(id: Int!): Wallet
 }
 
 extend type Mutation {
-    createWallet(memberId: Int!): CreateWalletPayload!
+    createWallet(memberId: Int!): CreateWalletPayload
 }
 
 type CreateWalletPayload {

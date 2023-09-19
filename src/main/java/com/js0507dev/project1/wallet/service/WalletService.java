@@ -1,6 +1,7 @@
 package com.js0507dev.project1.wallet.service;
 
-import com.js0507dev.project1.member.dto.MemberDTO;
+import com.js0507dev.project1.common.exception.*;
+import com.js0507dev.project1.common.exception.enums.ErrorCode;
 import com.js0507dev.project1.member.service.MemberFetchService;
 import com.js0507dev.project1.wallet.dto.CreateWalletPayloadDTO;
 import com.js0507dev.project1.wallet.dto.WalletDTO;
@@ -13,10 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -27,17 +24,13 @@ public class WalletService {
     private final MemberFetchService memberFetchService;
 
     public WalletDTO findById(Long id) {
-        Wallet found = walletRepository.findById(id).orElseThrow();
+        Wallet found = walletRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_WALLET, "not found wallet %d".formatted(id)));
         return WalletDTO.fromEntity(found);
     }
 
     public CreateWalletPayloadDTO create(Long memberId, Ticker ticker) {
         Long createdId = walletRepositoryCustom.create(memberId, ticker);
-        Wallet created = walletRepository.findById(createdId).orElseThrow();
+        Wallet created = walletRepository.findById(createdId).orElseThrow(() -> new InternalServerErrorException(ErrorCode.CREATE_WALLET_FAILED, "wallet creation failed"));
         return CreateWalletPayloadDTO.fromWalletDTO(WalletDTO.fromEntity(created));
-    }
-
-    public Map<WalletDTO, MemberDTO> fetchMemberByWallet(List<WalletDTO> wallets) {
-        return null;
     }
 }

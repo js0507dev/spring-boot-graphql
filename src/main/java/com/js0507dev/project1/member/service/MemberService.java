@@ -1,5 +1,7 @@
 package com.js0507dev.project1.member.service;
 
+import com.js0507dev.project1.common.exception.NotFoundException;
+import com.js0507dev.project1.common.exception.enums.ErrorCode;
 import com.js0507dev.project1.member.dto.CreateMemberDTO;
 import com.js0507dev.project1.member.dto.CreateMemberPayloadDTO;
 import com.js0507dev.project1.member.dto.MemberDTO;
@@ -20,7 +22,7 @@ public class MemberService {
   private final MemberQueryRepository memberQueryRepository;
 
   public MemberDTO findById(Long id) {
-    Member found = memberRepository.findById(id).orElseThrow();
+    Member found = memberRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER, "not found member by %d".formatted(id)));
     return MemberDTO.fromEntity(found);
   }
 
@@ -30,8 +32,8 @@ public class MemberService {
 
   public CreateMemberPayloadDTO create(CreateMemberDTO dto) {
     Member created = memberRepository.save(dto.toEntity());
-    MemberDTO found = this.findById(created.getId());
+    MemberDTO responseDto = MemberDTO.fromEntity(created);
 
-    return CreateMemberPayloadDTO.fromMemberDTO(found);
+    return CreateMemberPayloadDTO.fromMemberDTO(responseDto);
   }
 }

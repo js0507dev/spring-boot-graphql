@@ -5,13 +5,13 @@ type Member {
 }
 
 extend type Query {
-    members: [Member!]!
-    member(id: Int!): Member!
+    members: [Member!]
+    member(id: Int!): Member
 }
 
 extend type Mutation {
-    createMember(data: CreateMemberInput!): CreateMemberPayload!
-    patchMember(data: PatchMemberInput!): PatchMemberPayload!
+    createMember(data: CreateMemberInput!): CreateMemberPayload
+    patchMember(data: PatchMemberInput!): PatchMemberPayload
 }
 
 input CreateMemberInput {
