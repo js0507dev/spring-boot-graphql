@@ -18,4 +18,6 @@ public class Member extends AbstractTimestampEntity {
     private String name;
     @Column
     private String email;
+    @Column
+    private String password;
 }

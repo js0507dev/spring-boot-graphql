@@ -5,10 +5,16 @@ import lombok.Data;
 
 @Data
 public class CreateMemberDTO {
-    private String name;
-    private String email;
+  private String name;
+  private String email;
+  private String password;
 
-    public Member toEntity() {
-        return Member.builder().name(this.getName()).email(this.email).build();
-    }
+  public Member toEntity() {
+    return Member
+        .builder()
+        .name(this.name)
+        .email(this.email)
+        .password(this.password)
+        .build();
+  }
 }

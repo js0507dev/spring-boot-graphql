@@ -1,0 +1,24 @@
+extend type Mutation {
+    login(dto: MutationLoginInput!): MutationLoginPayload
+    logout: MutationLogoutPayload
+}
+
+input MutationLoginInput {
+    email: String!
+    password: String!
+}
+
+type Token {
+    jwt: String!
+    member: Member
+    revoked: Boolean!
+    revokedReason: String
+}
+
+type MutationLoginPayload {
+    token: Token!
+}
+
+type MutationLogoutPayload {
+    token: Token!
+}

@@ -23,6 +23,13 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     show-sql: true
+application:
+  security:
+    jwt:
+      secret-key: JvggDYBwAJZtML7MdCgzu6Ey8uSm2NM1k317d4yMrAUKGDXfQ3pGn0AVba4r1VMG
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
 logging:
   level:
     com.querydsl.sql: DEBUG
