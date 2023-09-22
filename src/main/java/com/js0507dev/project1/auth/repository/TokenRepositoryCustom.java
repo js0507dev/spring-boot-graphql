@@ -20,8 +20,8 @@ public class TokenRepositoryCustom {
     return Optional.ofNullable(queryFactory
         .from(token)
         .innerJoin(token.member, member)
-        .on(member.email.eq(email))
         .fetchJoin()
+        .where(member.email.eq(email))
         .select(token)
         .fetchOne());
   }

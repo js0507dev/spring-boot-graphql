@@ -3,10 +3,12 @@ package com.js0507dev.project1.auth.entity;
 import com.js0507dev.project1.common.entity.AbstractTimestampEntity;
 import com.js0507dev.project1.member.entity.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tokens")
 public class Token extends AbstractTimestampEntity {
@@ -18,7 +20,8 @@ public class Token extends AbstractTimestampEntity {
   @JoinColumn(name = "member_id", referencedColumnName = "id")
   private Member member;
   @Column
-  private Boolean revoked;
+  @Builder.Default
+  private Boolean revoked = false;
   @Column
   private String revokeReason;
 }

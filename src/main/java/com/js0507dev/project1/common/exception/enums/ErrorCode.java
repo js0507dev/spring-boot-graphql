@@ -11,5 +11,6 @@ public enum ErrorCode {
   // auth
   INVALID_JWT,
   EXPIRED,
+  INVALID_LOGIN_INFO,
   UNKNOWN_AUTHORIZATION_ERROR;
 }

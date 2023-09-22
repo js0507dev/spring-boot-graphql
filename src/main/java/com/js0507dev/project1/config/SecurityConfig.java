@@ -10,14 +10,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -31,17 +31,28 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
     return http
-        .csrf(AbstractHttpConfigurer::disable)
+        .csrf(csrf -> csrf
+            .ignoringRequestMatchers(mvc.pattern("/h2-console/**"))
+            .disable())
         .authorizeHttpRequests(auth -> {
-          auth.requestMatchers(mvc.pattern("/graphql")).permitAll().anyRequest().authenticated();
+          auth
+              .requestMatchers(mvc.pattern("/graphql"))
+              .permitAll()
+              .requestMatchers(mvc.pattern("/h2-console/**"))
+              .permitAll()
+              .anyRequest()
+              .authenticated();
         })
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .httpBasic(Customizer.withDefaults())
+//        .httpBasic(Customizer.withDefaults())
+//        .headers(AbstractHttpConfigurer::disable)
         .build();
   }
 
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer(MvcRequestMatcher.Builder mvc) {
-    return (web) -> web.ignoring().requestMatchers(mvc.pattern("/graphiql"), mvc.pattern("/health"));
+    return (web) -> web
+        .ignoring()
+        .requestMatchers(mvc.pattern("/graphiql"), mvc.pattern("/health"), mvc.pattern("/h2-console/**"));
   }
 }

@@ -1,8 +1,8 @@
 package com.js0507dev.project1.auth.util;
 
-import com.js0507dev.project1.member.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -38,6 +40,25 @@ public class JwtUtil {
     return extractExpiration(jwt).before(new Date());
   }
 
+  public String generateJwt(String email) {
+    return buildToken(new HashMap<>(), email, jwtExpiration);
+  }
+
+  private String buildToken(
+      Map<String, Object> extraClaims,
+      String email,
+      long expiration
+  ) {
+    return Jwts
+        .builder()
+        .setClaims(extraClaims)
+        .setSubject(email)
+        .setIssuedAt(new Date(System.currentTimeMillis()))
+        .setExpiration(new Date(System.currentTimeMillis() + expiration))
+        .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+        .compact();
+  }
+
   private Date extractExpiration(String jwt) {
     return extractClaim(jwt, Claims::getExpiration);
   }
@@ -51,7 +72,7 @@ public class JwtUtil {
     return Jwts.parserBuilder()
         .setSigningKey(getSigningKey())
         .build()
-        .parseClaimsJwt(jwt)
+        .parseClaimsJws(jwt)
         .getBody();
   }
 
