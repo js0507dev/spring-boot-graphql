@@ -44,8 +44,9 @@ public class SecurityConfig {
               .authenticated();
         })
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//        .httpBasic(Customizer.withDefaults())
-//        .headers(AbstractHttpConfigurer::disable)
+        .httpBasic(AbstractHttpConfigurer::disable)
+        .formLogin(AbstractHttpConfigurer::disable)
+        .logout(AbstractHttpConfigurer::disable)
         .build();
   }
 

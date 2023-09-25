@@ -1,0 +1,7 @@
+application:
+  security:
+    jwt:
+      secret-key: R4GJibxmN7x0pvKZjNVA8CxQELk0YLuPrGMahj7iZy0LmEPnbgUUg68FugpHChTE
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
