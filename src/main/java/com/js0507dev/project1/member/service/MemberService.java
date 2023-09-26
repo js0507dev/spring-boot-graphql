@@ -1,12 +1,12 @@
 package com.js0507dev.project1.member.service;
 
+import com.js0507dev.project1.auth.dto.LoginPayloadDTO;
 import com.js0507dev.project1.common.exception.NotFoundException;
 import com.js0507dev.project1.common.exception.enums.ErrorCode;
 import com.js0507dev.project1.member.dto.CreateMemberDTO;
 import com.js0507dev.project1.member.dto.CreateMemberPayloadDTO;
 import com.js0507dev.project1.member.dto.MemberDTO;
 import com.js0507dev.project1.member.entity.Member;
-import com.js0507dev.project1.member.repository.MemberQueryRepository;
 import com.js0507dev.project1.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +20,6 @@ import java.util.List;
 @Transactional
 public class MemberService {
   private final MemberRepository memberRepository;
-  private final MemberQueryRepository memberQueryRepository;
   private final PasswordEncoder passwordEncoder;
 
   public MemberDTO findById(Long id) {
