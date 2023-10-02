@@ -1,4 +1,4 @@
-package com.js0507dev.project1.auth;
+package com.js0507dev.project1.unit.auth;
 
 import com.github.javafaker.Faker;
 import com.js0507dev.project1.auth.dto.LoginDTO;
@@ -6,7 +6,7 @@ import com.js0507dev.project1.auth.entity.Token;
 import com.js0507dev.project1.auth.repository.TokenRepository;
 import com.js0507dev.project1.auth.service.AuthService;
 import com.js0507dev.project1.auth.util.JwtUtil;
-import com.js0507dev.project1.helper.MemberMockFactory;
+import com.js0507dev.project1.unit.helper.MemberMockFactory;
 import com.js0507dev.project1.member.entity.Member;
 import com.js0507dev.project1.member.repository.MemberRepository;
 import org.junit.jupiter.api.Assertions;

@@ -18,14 +18,14 @@ public class WalletQueryResolver {
   private final WalletService walletService;
   private final MemberService memberService;
 
-  @QueryMapping
-  public WalletDTO wallet(@Argument Long id) {
+  @QueryMapping(name = "wallet")
+  public WalletDTO queryWallet(@Argument Long id) {
     Wallet found = walletService.findById(id);
     return WalletDTO.fromEntity(found);
   }
 
   @SchemaMapping(typeName = "Wallet", field = "member")
-  public MemberDTO member(WalletDTO parent) {
+  public MemberDTO fieldMember(WalletDTO parent) {
     Member found = memberService.findById(parent.getMemberId());
     return MemberDTO.fromEntity(found);
   }

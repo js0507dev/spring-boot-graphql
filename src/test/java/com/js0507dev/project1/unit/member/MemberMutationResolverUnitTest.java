@@ -1,4 +1,4 @@
-package com.js0507dev.project1.member;
+package com.js0507dev.project1.unit.member;
 
 import com.js0507dev.project1.member.dto.CreateMemberDTO;
 import com.js0507dev.project1.member.dto.CreateMemberPayloadDTO;

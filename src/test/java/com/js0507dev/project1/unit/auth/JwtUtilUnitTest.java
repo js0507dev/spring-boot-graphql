@@ -1,4 +1,4 @@
-package com.js0507dev.project1.auth;
+package com.js0507dev.project1.unit.auth;
 
 import com.github.javafaker.Faker;
 import com.js0507dev.project1.auth.util.JwtUtil;
@@ -7,8 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 

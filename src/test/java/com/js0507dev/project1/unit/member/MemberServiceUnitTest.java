@@ -1,10 +1,10 @@
-package com.js0507dev.project1.member;
+package com.js0507dev.project1.unit.member;
 
 import com.github.javafaker.Faker;
 import com.js0507dev.project1.common.exception.CustomBaseException;
 import com.js0507dev.project1.common.exception.NotFoundException;
 import com.js0507dev.project1.common.exception.enums.ErrorCode;
-import com.js0507dev.project1.helper.MemberMockFactory;
+import com.js0507dev.project1.unit.helper.MemberMockFactory;
 import com.js0507dev.project1.member.dto.CreateMemberDTO;
 import com.js0507dev.project1.member.entity.Member;
 import com.js0507dev.project1.member.repository.MemberRepository;
@@ -37,7 +37,7 @@ public class MemberServiceUnitTest {
   private final Faker faker = new Faker(Locale.KOREA);
   private final MemberMockFactory memberMockFactory = new MemberMockFactory(this.faker);
 
-  @DisplayName("id를 입력해 findById 메서드를 호출하면 MemberDTO를 리턴한다.")
+  @DisplayName("id를 입력해 findById 메서드를 호출하면 Member를 리턴한다.")
   @Test
   public void givenRandomId_whenFindById_thenReturnMemberDTO() {
     Long fakeId = faker
@@ -60,7 +60,7 @@ public class MemberServiceUnitTest {
 
     try {
       memberService.findById(fakeId);
-      assertTrue(false);
+      fail();
     } catch (Exception ex) {
       assertInstanceOf(NotFoundException.class, ex);
       CustomBaseException customBaseException = (CustomBaseException) ex;
@@ -68,7 +68,7 @@ public class MemberServiceUnitTest {
     }
   }
 
-  @DisplayName("findAll 메서드를 호출하면 MemberDTO 목록을 리턴한다.")
+  @DisplayName("findAll 메서드를 호출하면 Member 목록을 리턴한다.")
   @Test
   public void given_whenFindAll_thenReturnMemberDTOList() {
     List<Member> mockMembers = new ArrayList<>();
@@ -79,7 +79,7 @@ public class MemberServiceUnitTest {
     assertEquals(1, result.size());
   }
 
-  @DisplayName("create 메서드를 호출하면 Member를 저장하고, MemberDTO를 리턴한다.")
+  @DisplayName("create 메서드를 호출하면 Member를 저장하고, 리턴한다.")
   @Test
   public void givenMockDto_whenCreate_thenSaveMemberAndReturnMemberDTO() {
     CreateMemberDTO dto = CreateMemberDTO

@@ -23,7 +23,6 @@ import java.util.Optional;
 public class WalletService {
   private final WalletRepository walletRepository;
   private final WalletRepositoryCustom walletRepositoryCustom;
-  private final MemberFetchService memberFetchService;
 
   public Wallet findById(Long id) {
     return walletRepository

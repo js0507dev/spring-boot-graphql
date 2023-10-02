@@ -1,4 +1,4 @@
-package com.js0507dev.project1.helper;
+package com.js0507dev.project1.unit.helper;
 
 import com.github.javafaker.Faker;
 import com.js0507dev.project1.member.entity.Member;
