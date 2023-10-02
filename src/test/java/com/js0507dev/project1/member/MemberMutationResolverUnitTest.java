@@ -1,17 +1,12 @@
 package com.js0507dev.project1.member;
 
-import com.github.javafaker.Faker;
-import com.js0507dev.project1.auth.dto.LoginDTO;
-import com.js0507dev.project1.auth.dto.LoginPayloadDTO;
-import com.js0507dev.project1.auth.entity.Token;
-import com.js0507dev.project1.auth.resolver.AuthMutationResolver;
-import com.js0507dev.project1.auth.service.AuthService;
-import com.js0507dev.project1.helper.AuthMockFactory;
-import com.js0507dev.project1.helper.MemberMockFactory;
 import com.js0507dev.project1.member.dto.CreateMemberDTO;
 import com.js0507dev.project1.member.dto.CreateMemberPayloadDTO;
+import com.js0507dev.project1.member.dto.MemberDTO;
+import com.js0507dev.project1.member.entity.Member;
 import com.js0507dev.project1.member.resolver.MemberMutationResolver;
 import com.js0507dev.project1.member.service.MemberService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,12 +27,18 @@ public class MemberMutationResolverUnitTest {
   @Test
   public void givenFakes_whenCreateMember_thenMemberServiceCalledWith1Times() {
     CreateMemberDTO dto = Mockito.mock(CreateMemberDTO.class);
-    when(memberService.create(dto)).thenReturn(Mockito.mock(CreateMemberPayloadDTO.class));
+    Member mockMember = Mockito.mock(Member.class);
+    when(memberService.create(dto)).thenReturn(mockMember);
 
-    memberMutationResolver.create(dto);
+    CreateMemberPayloadDTO created = memberMutationResolver.create(dto);
 
     Mockito
         .verify(memberService, Mockito.times(1))
         .create(dto);
+    MemberDTO record = created.getRecord();
+    Assertions.assertNotNull(record);
+    Assertions.assertEquals(mockMember.getId(), record.getId());
+    Assertions.assertEquals(mockMember.getName(), record.getName());
+    Assertions.assertEquals(mockMember.getEmail(), record.getEmail());
   }
 }

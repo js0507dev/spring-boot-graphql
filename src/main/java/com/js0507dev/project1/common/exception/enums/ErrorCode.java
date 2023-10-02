@@ -6,6 +6,7 @@ public enum ErrorCode {
 
   // wallet
   NOT_FOUND_WALLET,
+  ALREADY_CREATED_WALLET,
   CREATE_WALLET_FAILED,
 
   // auth

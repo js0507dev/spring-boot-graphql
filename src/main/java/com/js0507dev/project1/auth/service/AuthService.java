@@ -1,8 +1,6 @@
 package com.js0507dev.project1.auth.service;
 
 import com.js0507dev.project1.auth.dto.LoginDTO;
-import com.js0507dev.project1.auth.dto.LoginPayloadDTO;
-import com.js0507dev.project1.auth.dto.TokenDTO;
 import com.js0507dev.project1.auth.entity.Token;
 import com.js0507dev.project1.auth.repository.TokenRepository;
 import com.js0507dev.project1.auth.util.JwtUtil;
@@ -22,18 +20,13 @@ public class AuthService {
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
 
-  public LoginPayloadDTO login(LoginDTO dto) {
+  public Token login(LoginDTO dto) {
     Member member = memberRepository
         .findByEmail(dto.getEmail())
         .filter(entity -> passwordEncoder.matches(dto.getPassword(), entity.getPassword()))
         .orElseThrow(() -> new NotFoundException(ErrorCode.INVALID_LOGIN_INFO, "not matched login info"));
     Token createToken = generateTokenByMember(member);
-    Token created = tokenRepository.save(createToken);
-
-    return LoginPayloadDTO
-        .builder()
-        .token(TokenDTO.fromEntity(created))
-        .build();
+    return tokenRepository.save(createToken);
   }
 
   private Token generateTokenByMember(Member member) {

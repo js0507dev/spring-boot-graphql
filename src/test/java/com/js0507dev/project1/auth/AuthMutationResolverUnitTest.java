@@ -3,10 +3,12 @@ package com.js0507dev.project1.auth;
 import com.github.javafaker.Faker;
 import com.js0507dev.project1.auth.dto.LoginDTO;
 import com.js0507dev.project1.auth.dto.LoginPayloadDTO;
+import com.js0507dev.project1.auth.dto.TokenDTO;
 import com.js0507dev.project1.auth.entity.Token;
 import com.js0507dev.project1.auth.resolver.AuthMutationResolver;
 import com.js0507dev.project1.auth.service.AuthService;
 import com.js0507dev.project1.helper.AuthMockFactory;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,12 +40,17 @@ public class AuthMutationResolverUnitTest {
             .password())
         .build();
     Token token = authMockFactory.mockToken();
-    when(authService.login(dto)).thenReturn(Mockito.mock(LoginPayloadDTO.class));
+    when(authService.login(dto)).thenReturn(token);
 
-    authMutationResolver.login(dto);
+    LoginPayloadDTO createdToken = authMutationResolver.login(dto);
 
     Mockito
         .verify(authService, Mockito.times(1))
         .login(dto);
+    TokenDTO record = createdToken.getToken();
+    Assertions.assertEquals(token.getJwt(), record.getJwt());
+    Assertions.assertEquals(token.getMemberId(), record.getMemberId());
+    Assertions.assertEquals(token.getRevoked(), record.getRevoked());
+    Assertions.assertEquals(token.getRevokeReason(), record.getRevokedReason());
   }
 }

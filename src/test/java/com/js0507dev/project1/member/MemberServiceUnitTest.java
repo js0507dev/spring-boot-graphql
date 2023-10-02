@@ -1,10 +1,11 @@
 package com.js0507dev.project1.member;
 
 import com.github.javafaker.Faker;
+import com.js0507dev.project1.common.exception.CustomBaseException;
+import com.js0507dev.project1.common.exception.NotFoundException;
+import com.js0507dev.project1.common.exception.enums.ErrorCode;
 import com.js0507dev.project1.helper.MemberMockFactory;
 import com.js0507dev.project1.member.dto.CreateMemberDTO;
-import com.js0507dev.project1.member.dto.CreateMemberPayloadDTO;
-import com.js0507dev.project1.member.dto.MemberDTO;
 import com.js0507dev.project1.member.entity.Member;
 import com.js0507dev.project1.member.repository.MemberRepository;
 import com.js0507dev.project1.member.service.MemberService;
@@ -21,10 +22,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class MemberServiceUnitTest {
@@ -46,10 +46,26 @@ public class MemberServiceUnitTest {
     Member mockMember = Mockito.mock(Member.class);
     when(memberRepository.findById(fakeId)).thenReturn(Optional.of(mockMember));
 
-    MemberDTO result = memberService.findById(fakeId);
-    assertEquals(mockMember.getId(), result.getId());
-    assertEquals(mockMember.getName(), result.getName());
-    assertEquals(mockMember.getEmail(), result.getEmail());
+    Member result = memberService.findById(fakeId);
+    assertNotNull(result);
+  }
+
+  @DisplayName("존재하지 않는 member를 조회하면 NotFoundException을 던진다.")
+  @Test
+  public void givenInvalidId_whenFindById_thenThrowNotFoundException() {
+    Long fakeId = faker
+        .number()
+        .randomNumber();
+    when(memberRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+    try {
+      memberService.findById(fakeId);
+      assertTrue(false);
+    } catch (Exception ex) {
+      assertInstanceOf(NotFoundException.class, ex);
+      CustomBaseException customBaseException = (CustomBaseException) ex;
+      assertEquals(ErrorCode.NOT_FOUND_MEMBER, customBaseException.getCode());
+    }
   }
 
   @DisplayName("findAll 메서드를 호출하면 MemberDTO 목록을 리턴한다.")
@@ -59,13 +75,8 @@ public class MemberServiceUnitTest {
     mockMembers.add(Mockito.mock(Member.class));
     when(memberRepository.findAll()).thenReturn(mockMembers);
 
-    List<MemberDTO> result = memberService.findAll();
+    List<Member> result = memberService.findAll();
     assertEquals(1, result.size());
-    Member mockMember = mockMembers.get(0);
-    MemberDTO resultDTO = result.get(0);
-    assertEquals(mockMember.getId(), resultDTO.getId());
-    assertEquals(mockMember.getName(), resultDTO.getName());
-    assertEquals(mockMember.getEmail(), resultDTO.getEmail());
   }
 
   @DisplayName("create 메서드를 호출하면 Member를 저장하고, MemberDTO를 리턴한다.")
@@ -98,7 +109,7 @@ public class MemberServiceUnitTest {
     when(passwordEncoder.encode(anyString())).thenReturn(encryptedPassword);
     when(memberRepository.save(any())).thenReturn(createdMember);
 
-    CreateMemberPayloadDTO created = memberService.create(dto);
+    memberService.create(dto);
 
     Mockito
         .verify(memberRepository, Mockito.times(1))
@@ -106,10 +117,5 @@ public class MemberServiceUnitTest {
     Mockito
         .verify(passwordEncoder, Mockito.times(1))
         .encode(anyString());
-    assertNotNull(created.getRecord());
-    MemberDTO memberDTO = created.getRecord();
-    assertEquals(createdMember.getId(), memberDTO.getId());
-    assertEquals(createdMember.getName(), memberDTO.getName());
-    assertEquals(createdMember.getEmail(), memberDTO.getEmail());
   }
 }

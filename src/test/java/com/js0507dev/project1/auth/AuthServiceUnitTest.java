@@ -9,6 +9,7 @@ import com.js0507dev.project1.auth.util.JwtUtil;
 import com.js0507dev.project1.helper.MemberMockFactory;
 import com.js0507dev.project1.member.entity.Member;
 import com.js0507dev.project1.member.repository.MemberRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,9 +63,10 @@ public class AuthServiceUnitTest {
     when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
     when(tokenRepository.save(any(Token.class))).thenReturn(Mockito.mock(Token.class));
 
-    authService.login(dto);
+    Token createdToken = authService.login(dto);
 
     Mockito.verify(memberRepository, Mockito.times(1)).findByEmail(dto.getEmail());
     Mockito.verify(tokenRepository, Mockito.times(1)).save(any(Token.class));
+    Assertions.assertNotNull(createdToken);
   }
 }

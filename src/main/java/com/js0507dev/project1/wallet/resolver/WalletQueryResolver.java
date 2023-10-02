@@ -1,8 +1,10 @@
 package com.js0507dev.project1.wallet.resolver;
 
 import com.js0507dev.project1.member.dto.MemberDTO;
+import com.js0507dev.project1.member.entity.Member;
 import com.js0507dev.project1.member.service.MemberService;
 import com.js0507dev.project1.wallet.dto.WalletDTO;
+import com.js0507dev.project1.wallet.entity.Wallet;
 import com.js0507dev.project1.wallet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -18,11 +20,13 @@ public class WalletQueryResolver {
 
   @QueryMapping
   public WalletDTO wallet(@Argument Long id) {
-    return walletService.findById(id);
+    Wallet found = walletService.findById(id);
+    return WalletDTO.fromEntity(found);
   }
 
   @SchemaMapping(typeName = "Wallet", field = "member")
   public MemberDTO member(WalletDTO parent) {
-    return memberService.findById(parent.getMemberId());
+    Member found = memberService.findById(parent.getMemberId());
+    return MemberDTO.fromEntity(found);
   }
 }

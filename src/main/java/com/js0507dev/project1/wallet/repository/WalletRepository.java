@@ -1,6 +1,7 @@
 package com.js0507dev.project1.wallet.repository;
 
 import com.js0507dev.project1.wallet.entity.Wallet;
+import com.js0507dev.project1.wallet.enums.Ticker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -11,4 +12,5 @@ import java.util.Optional;
 
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Long>, QuerydslPredicateExecutor<Wallet> {
+  Optional<Wallet> findByMemberIdAndTicker(Long memberId, Ticker ticker);
 }
