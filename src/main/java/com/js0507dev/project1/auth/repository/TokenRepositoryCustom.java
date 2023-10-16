@@ -1,7 +1,6 @@
 package com.js0507dev.project1.auth.repository;
 
 import com.js0507dev.project1.auth.entity.Token;
-import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

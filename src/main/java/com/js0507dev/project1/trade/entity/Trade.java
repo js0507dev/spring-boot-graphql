@@ -19,9 +19,6 @@ public class Trade extends AbstractTimestampEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private TradeType tradeType;
     @Column
     private Long tradeUnitPrice;
     @Column

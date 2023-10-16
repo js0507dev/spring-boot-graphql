@@ -1,0 +1,34 @@
+type Order {
+    id: Int!
+    member: Member
+    "거래 유형"
+    tradeType: TradeTypes!
+    "주문 유형"
+    orderType:OrderTypes!
+    "주문 단가"
+    unitPrice: Int!
+    "총 주문수량"
+    totalVolume: Int!
+    "체결된 주문수량"
+    tradeVolume: Int!
+    "주문 취소일 경우, 취소된 주문 정보"
+    canceledOrder: Order
+    createdAt: String!
+    updatedAt: String!
+}
+
+enum TradeTypes {
+    "매수"
+    BUY
+    "매도"
+    SELL
+    "주문취소"
+    CANCEL
+}
+
+enum OrderTypes {
+    "시장가 주문"
+    MARKET
+    "지정가 주문"
+    LIMIT
+}

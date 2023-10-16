@@ -1,0 +1,19 @@
+type Trade {
+    id: Int!
+    "체결 단가"
+    tradeUnitPrice: Int!
+    "체결 수량"
+    tradeVolume: Int!
+    "체결 금액"
+    tradeAmount: Int!
+    "maker 유저"
+    makerMember: Member
+    "maker 주문"
+    makerOrder: Order
+    "taker 유저"
+    takerMember: Member
+    "taker 주문"
+    takerOrder: Order
+    createdAt: String!
+    updatedAt: String!
+}

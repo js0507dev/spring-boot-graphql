@@ -20,7 +20,6 @@ COMMENT ON COLUMN orders.cancel_order_id is '주문취소시 원본 주문 id';
 
 CREATE OR REPLACE TABLE trades(
     id SERIAL PRIMARY KEY,
-    trade_type VARCHAR(20) NOT NULL,
     trade_unit_price INT NOT NULL,
     trade_volume INT NOT NULL,
     trade_amount BIGINT NOT NULL,
@@ -32,7 +31,6 @@ CREATE OR REPLACE TABLE trades(
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
-COMMENT ON COLUMN trades.trade_type is '거래 유형(taker 기준): BUY, SELL, CANCEL';
 COMMENT ON COLUMN trades.trade_unit_price is '체결단가';
 COMMENT ON COLUMN trades.trade_volume is '체결량';
 COMMENT ON COLUMN trades.trade_amount is '체결금액';
