@@ -3,11 +3,13 @@ package com.js0507dev.project1.common.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 
 import java.time.LocalDateTime;
 
+@Getter
 @MappedSuperclass
 public abstract class AbstractTimestampEntity {
     @Column

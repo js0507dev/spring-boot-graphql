@@ -31,6 +31,8 @@ public class Order extends AbstractTimestampEntity {
     @Column
     private OrderType orderType;
     @Column
+    private Long unitPrice;
+    @Column
     private Long totalVolume;
     @Column
     @Builder.Default

@@ -17,6 +17,26 @@ type Order {
     updatedAt: String!
 }
 
+extend type Mutation {
+    createOrder(dto: CreateOrderInput): CreateOrderPayload
+}
+
+input CreateOrderInput {
+    orderPosition: OrderPosition!
+    orderType: OrderTypes!
+    quantity: Int!
+    unitPrice: Int!
+}
+
+type CreateOrderPayload {
+    record: Order!
+}
+
+enum OrderPosition {
+    BUY
+    SELL
+}
+
 enum TradeTypes {
     "매수"
     BUY

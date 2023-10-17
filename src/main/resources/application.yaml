@@ -23,6 +23,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     show-sql: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 application:
   security:
     jwt:
@@ -30,6 +35,14 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+  rabbitmq:
+    order-created:
+      exchange: x.order-created
+      topic: order-created.*
+      steps:
+        register-order-book:
+          queue: q.register-order-book
+          routing-key: order-created.register-order-book
 logging:
   level:
     com.querydsl.sql: DEBUG

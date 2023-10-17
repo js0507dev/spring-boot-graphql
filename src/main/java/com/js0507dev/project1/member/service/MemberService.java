@@ -20,8 +20,16 @@ public class MemberService {
   private final PasswordEncoder passwordEncoder;
 
   public Member findById(Long id) {
-    return memberRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER, ("not " +
-        "foundember by %d").formatted(id)));
+    return memberRepository
+        .findById(id)
+        .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER, "not foundember by %d".formatted(id)));
+  }
+
+  public Member findByEmail(String email) {
+    return memberRepository
+        .findByEmail(email)
+        .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER,
+            "not found member by %s".formatted(email)));
   }
 
   public List<Member> findAll() {
