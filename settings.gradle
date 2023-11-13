@@ -1,1 +1,6 @@
-rootProject.name = 'project1'
+rootProject.name = 'js0507dev-matching-engine'
+
+include 'order'
+include 'wallet'
+include 'common'
+

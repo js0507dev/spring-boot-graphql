@@ -1,0 +1,49 @@
+spring:
+  flyway:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test-order
+    user: test
+    password: test123
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test-order
+    username: test
+    password: test123
+  h2:
+    console:
+      enabled: true
+  graphql:
+    graphiql:
+      enabled: true
+    schema:
+      file-extensions: .graphql,.gql
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    show-sql: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+application:
+  security:
+    jwt:
+      secret-key: JvggDYBwAJZtML7MdCgzu6Ey8uSm2NM1k317d4yMrAUKGDXfQ3pGn0AVba4r1VMG
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+  rabbitmq:
+    order-created:
+      exchange: x.order-created
+      topic: order-created.*
+      steps:
+        register-order-book:
+          queue: q.register-order-book
+          routing-key: order-created.register-order-book
+logging:
+  level:
+    com.querydsl.sql: DEBUG
+    org.hibernate.sql: DEBUG

@@ -1,0 +1,5 @@
+type Member {
+    id: Int!
+    name: String!
+    email: String!
+}
